@@ -32,11 +32,31 @@
 
 **Answer:** `std::cin >> str` stops reading at the first whitespace character. "John Doe" would be read as just "John". `std::getline(cin, str)` reads the entire line including spaces. But after a `std::cin >> choice`, a leftover `\n` sits in the buffer, so `std::cin.ignore()` must be called first to discard it.
 
-## 9. What does `std::stoi` do and what could go wrong?
+## 9. What does `std::stoi` do and how do you handle bad data?
 
-**Answer:** `std::stoi` converts a `std::string` to an `int` (like JavaScript's `parseInt`). If the string is not a valid number (e.g., `"abc"`), it throws a `std::invalid_argument` exception. In our code, we only call it during file loading — by that point the data was already validated when the user entered it, so it should always be numeric.
+**Answer:** `std::stoi` converts a `std::string` to an `int` (like `parseInt`). If the string isn't a valid number, it throws an exception. In `file_manager.cpp`, we wrap it in a `try/catch(...)` block — if a line in `applicants.txt` is corrupted (e.g., someone manually edited the file), we skip that line with a warning instead of crashing the program.
 
-## 10. Explain the compilation and linking process.
+## 10. How does the score validation loop work?
+
+**Answer:** We use a `while (true)` loop around JAMB score input. If the input is non-numeric (`cin.fail()`) or out of range (0–400), we print an error and `continue` — re-prompting until valid input is received. Only then do we `break` and proceed.
+
+## 11. How does the search function work?
+
+**Answer:** `searchApplicant()` takes a name query from the user, then iterates through the vector using `std::string::find()` to check if the query is a substring of any applicant's name. Matches are collected as pointers (`const Applicant*`) in a separate vector and displayed in a formatted table.
+
+## 12. How does the statistics function work?
+
+**Answer:** It iterates through all applicants and counts totals, admitted, and not-admitted. It uses `std::map<std::string, int>` to track per-department counts — one map for total per department (`deptTotal`), another for admitted per department (`deptAdmitted`). The structured binding (`const auto& [dept, count]`) in the range-for loop unpacks each map entry.
+
+## 13. Why use `std::map` for department statistics?
+
+**Answer:** `std::map` automatically keeps keys sorted and provides O(log n) lookup. When we do `deptTotal[a.department]++`, it either inserts a new entry (initialized to 0, then incremented) or increments an existing one — same pattern as a JS object `obj[key] = (obj[key] || 0) + 1`.
+
+## 14. Explain the `try/catch(...)` in file_manager.cpp.
+
+**Answer:** `try` wraps code that might fail; `catch(...)` catches *any* exception (vs catching a specific type like `std::invalid_argument`). When `std::stoi` receives a non-numeric string, it throws. We catch it, print a warning, and `continue` to the next line — the program stays running.
+
+## 15. Explain the compilation and linking process.
 
 **Answer:**
 1. **Preprocessing** — `#include` directives are replaced with actual header content, macros expanded
