@@ -4,8 +4,27 @@ A modular C++17 console application for managing university admissions.
 
 ## Quick Start
 
+### Linux / macOS
 ```bash
 g++ -std=c++17 main.cpp applicant.cpp admission.cpp file_manager.cpp -o CampusAdmit
+./CampusAdmit
+```
+
+### Windows (MinGW / GCC via MSYS2)
+```bash
+g++ -std=c++17 main.cpp applicant.cpp admission.cpp file_manager.cpp -o CampusAdmit.exe
+CampusAdmit.exe
+```
+
+### Windows (Visual Studio)
+```powershell
+cl /EHsc /std:c++17 main.cpp applicant.cpp admission.cpp file_manager.cpp /Fe:CampusAdmit.exe
+CampusAdmit.exe
+```
+
+### macOS (Xcode CLT)
+```bash
+clang++ -std=c++17 main.cpp applicant.cpp admission.cpp file_manager.cpp -o CampusAdmit
 ./CampusAdmit
 ```
 
@@ -52,7 +71,7 @@ John Doe|Computer Science|285|ADMITTED
 ## Compilation
 
 ```bash
-# Debug build with warnings
+# Debug build with warnings (Linux/macOS)
 g++ -std=c++17 -Wall -Wextra main.cpp applicant.cpp admission.cpp file_manager.cpp -o CampusAdmit
 
 # Release build (optimized)
@@ -60,6 +79,9 @@ g++ -std=c++17 -O2 main.cpp applicant.cpp admission.cpp file_manager.cpp -o Camp
 
 # Debug build with symbols (for GDB)
 g++ -std=c++17 -g main.cpp applicant.cpp admission.cpp file_manager.cpp -o CampusAdmit
+
+# Windows (MSVC)
+cl /EHsc /std:c++17 main.cpp applicant.cpp admission.cpp file_manager.cpp /Fe:CampusAdmit.exe
 ```
 
 ## Menu
@@ -70,8 +92,10 @@ g++ -std=c++17 -g main.cpp applicant.cpp admission.cpp file_manager.cpp -o Campu
 ========================
 1. Register Applicant
 2. View Applicants
-3. Save Applicants
-4. Exit
+3. Search Applicant
+4. View Statistics
+5. Save Applicants
+6. Exit
 ------------------------
 Choice:
 ```
@@ -81,13 +105,17 @@ Choice:
 | C++ Feature | Where Used |
 |---|---|
 | `struct` | `applicant.h:9` — data grouping |
-| `vector` | `main.cpp:57` — dynamic array |
+| `vector` | `main.cpp:75` — dynamic array |
 | `string` | `applicant.h:10-13` — text data |
+| `map` | `applicant.cpp:114,115` — department statistics |
 | `fstream` / `ifstream` / `ofstream` | `file_manager.cpp:9,27` — file I/O |
 | `namespace` | Every `.h` file — scope control |
 | `#include` guards | Every `.h` file — prevent redefinition |
-| `switch` / `while` | `main.cpp:73,63` — control flow |
-| `getline` | `main.cpp:34,36` — line input |
+| `switch` / `while` | `main.cpp:91,81` — control flow |
+| `getline` | `main.cpp:36,39` — line input |
 | `iomanip` / `setw` | `applicant.cpp:14-35` — table formatting |
 | `const &` parameters | `admission.h:8-9` — read-only references |
 | `auto` | `file_manager.cpp:16,35` — type inference |
+| `try/catch` | `file_manager.cpp:47-51` — corrupted file handling |
+| `structured bindings` | `applicant.cpp:141` — `const auto& [dept, count]` |
+| `range-based for` | `applicant.cpp:26,76,117` — iterating vector/map |
