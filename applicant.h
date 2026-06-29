@@ -14,6 +14,8 @@ struct Applicant {
 };
 
 void displayApplicants(const std::vector<Applicant>& applicants);
+void searchApplicant(const std::vector<Applicant>& applicants);
+void showStatistics(const std::vector<Applicant>& applicants);
 
 } // namespace CampusAdmit
 
