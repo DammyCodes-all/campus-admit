@@ -38,18 +38,22 @@ void registerApplicant(std::vector<CampusAdmit::Applicant>& applicants) {
     std::cout << "Department: ";
     std::getline(std::cin, a.department);
 
-    std::cout << "JAMB score: ";
-    std::cin >> a.jambScore;
+    while (true) {
+        std::cout << "JAMB score: ";
+        std::cin >> a.jambScore;
 
-    if (std::cin.fail()) {
-        clearInputBuffer();
-        std::cout << "Invalid score. Registration cancelled.\n";
-        return;
-    }
+        if (std::cin.fail()) {
+            clearInputBuffer();
+            std::cout << "Invalid input. Please enter a number.\n";
+            continue;
+        }
 
-    if (a.jambScore < 0 || a.jambScore > 400) {
-        std::cout << "Invalid score. JAMB score must be between 0 and 400.\n";
-        return;
+        if (a.jambScore < 0 || a.jambScore > 400) {
+            std::cout << "Score must be between 0 and 400.\n";
+            continue;
+        }
+
+        break;
     }
 
     int cutOff = CampusAdmit::getCutOff(a.department);
