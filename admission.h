@@ -7,6 +7,7 @@ namespace CampusAdmit {
 
 int getCutOff(const std::string& department);
 std::string evaluateAdmission(int score, const std::string& department);
+void listDepartments();
 
 } // namespace CampusAdmit
 

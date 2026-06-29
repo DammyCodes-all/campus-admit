@@ -43,7 +43,12 @@ void loadApplicants(std::vector<Applicant>& applicants, const std::string& filen
 
         std::string scoreStr;
         std::getline(ss, scoreStr,         '|');
-        a.jambScore = std::stoi(scoreStr);
+        try {
+            a.jambScore = std::stoi(scoreStr);
+        } catch (...) {
+            std::cerr << "Warning: Skipped corrupted line: " << line << "\n";
+            continue;
+        }
 
         std::getline(ss, a.admissionStatus, '|');
 

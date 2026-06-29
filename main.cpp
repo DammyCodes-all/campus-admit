@@ -35,6 +35,7 @@ void registerApplicant(std::vector<CampusAdmit::Applicant>& applicants) {
     std::cout << "Full name: ";
     std::getline(std::cin, a.fullName);
 
+    CampusAdmit::listDepartments();
     std::cout << "Department: ";
     std::getline(std::cin, a.department);
 
