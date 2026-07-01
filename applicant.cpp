@@ -5,6 +5,11 @@
 
 namespace CampusAdmit {
 
+std::string truncate(const std::string& text, size_t width) {
+    if (text.size() <= width) return text;
+    return text.substr(0, width - 2) + "..";
+}
+
 void displayApplicants(const std::vector<Applicant>& applicants) {
     if (applicants.empty()) {
         std::cout << "No applicants registered yet.\n";
@@ -26,8 +31,8 @@ void displayApplicants(const std::vector<Applicant>& applicants) {
 
     for (const auto& a : applicants) {
         std::cout << std::left
-                  << std::setw(25) << a.fullName
-                  << std::setw(22) << a.department
+                  << std::setw(25) << truncate(a.fullName, 25)
+                  << std::setw(22) << truncate(a.department, 22)
                   << std::right
                   << std::setw(8)  << a.jambScore
                   << "  "
@@ -77,8 +82,8 @@ void searchApplicant(const std::vector<Applicant>& applicants) {
 
     for (const auto* a : matches) {
         std::cout << std::left
-                  << std::setw(25) << a->fullName
-                  << std::setw(22) << a->department
+                  << std::setw(25) << truncate(a->fullName, 25)
+                  << std::setw(22) << truncate(a->department, 22)
                   << std::right
                   << std::setw(8)  << a->jambScore
                   << "  "
